@@ -110,7 +110,7 @@ public class PlayerListener implements Listener {
 
                 // Case: user is holding an attachable item already (they are attempting to place it on the door blocks)
                 ItemStack heldItem = event.getItem();
-                if (heldItem != null && SecretDoorHelper.isAttachableItem(heldItem.getType())) {
+                if (heldItem != null && SecretDoorHelper.isPlaceableAttachable(heldItem.getType())) {
                     return;
                 }
 

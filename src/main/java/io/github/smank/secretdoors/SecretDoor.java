@@ -118,11 +118,24 @@ public class SecretDoor implements SecretOpenable {
 
                 // if it is a simple attachable item
                 Directional sam = SecretDoorHelper.getAttachableFromBlock(attached);
+                if (SecretDoors.DEBUG && sam != null) {
+                    System.out.println("Found attachable at " + attached.getLocation() +
+                        " type=" + attached.getType() +
+                        " facing=" + sam.getFacing() +
+                        " checkFace=" + face);
+                }
                 if (sam != null && sam.getFacing() != null) {
-                    // skip it if it isn't facing the same way
+                    // skip if torch isn't attached to our concealing block
+                    // A torch EAST of concealing block, attached to it, faces EAST (away from attachment)
+                    // face = EAST (direction we're checking), torch.getFacing() = EAST → match!
                     if (sam.getFacing() != face) {
-                        System.out.println("Skipped");
+                        if (SecretDoors.DEBUG) {
+                            System.out.println("  Skipping: facing " + sam.getFacing() + " != checkFace " + face);
+                        }
                         continue;
+                    }
+                    if (SecretDoors.DEBUG) {
+                        System.out.println("  ADDING attachment: " + attached.getType() + " at " + attached.getLocation());
                     }
 
                     // First time we've been here, initialize the arrays
@@ -141,9 +154,8 @@ public class SecretDoor implements SecretOpenable {
 
                     attachedBlocks[attachedCount] = attached;
                     attachedMats[attachedCount] = attached.getType();
-                    // Broken API -- See above.
-                    //attachedDirections[attachedCount] = sam.getFacing();
-                    attachedData[attachedCount] = attached.getBlockData();
+                    // Clone the BlockData to avoid issues with mutable references
+                    attachedData[attachedCount] = attached.getBlockData().clone();
                     attachedCount++;
                 }
             }
@@ -210,6 +222,9 @@ public class SecretDoor implements SecretOpenable {
 
     @Override
     public void close() {
+        if (SecretDoors.DEBUG) {
+            System.out.println("Closing door with " + attachedCount + " attached blocks to restore");
+        }
         for (int i = 0; i < 2; i++) {
             if (SecretDoors.DEBUG) {
                 System.out.println("Setting data[" + i + "] from " + this.blocks[i].getType() + " to " + this.materials[i]);
@@ -217,9 +232,8 @@ public class SecretDoor implements SecretOpenable {
             }
 
             this.blocks[i].setType(this.materials[i]);
-            // API is non-functional as of Bukkit/Spigot 1.8 - 2014-12-21
-//			this.blocks[i].getState().setData(this.data[i]);
-            this.blocks[i].getState().setBlockData(this.data[i]);
+            // Use setBlockData directly on the block, not on a snapshot
+            this.blocks[i].setBlockData(this.data[i]);
         }
 
         // Close the actual door
@@ -233,6 +247,10 @@ public class SecretDoor implements SecretOpenable {
 
         // handle attached blocks
         for (int i = 0; i < attachedCount; i++) {
+            if (SecretDoors.DEBUG) {
+                System.out.println("Restoring attached block " + i + ": " + attachedMats[i] + " at " + attachedBlocks[i].getLocation());
+                System.out.println("  BlockData to restore: " + attachedData[i]);
+            }
 
             attachedBlocks[i].setType(attachedMats[i]);
 
@@ -263,9 +281,15 @@ public class SecretDoor implements SecretOpenable {
 
     @Override
     public void open() {
+        if (SecretDoors.DEBUG) {
+            System.out.println("Opening door with " + attachedCount + " attached blocks");
+        }
 
         // handle attached blocks
         for (int i = 0; i < attachedCount; i++) {
+            if (SecretDoors.DEBUG) {
+                System.out.println("  Removing attached block " + i + ": " + attachedBlocks[i].getType() + " at " + attachedBlocks[i].getLocation());
+            }
             attachedBlocks[i].setType(Material.AIR);
         }
 

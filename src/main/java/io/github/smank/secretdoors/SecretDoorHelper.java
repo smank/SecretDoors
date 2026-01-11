@@ -135,17 +135,65 @@ public class SecretDoorHelper {
 
 
     /**
-     * Returns true if item is considered a valid attachable item.  Note that valid attachable items is a subset
-     * of all attachable items.
+     * Returns true if item is a placeable attachable item (held in hand).
+     * Used to check if player is trying to place something on a concealing block.
      * @param item Material type to be checked.
-     * @return true if item is a valid attachable item, false otherwise.
+     * @return true if item is a placeable attachable item, false otherwise.
+     */
+    public static boolean isPlaceableAttachable(Material item) {
+        if (item == null) return false;
+        switch (item) {
+            // Torch items (become WALL_TORCH when placed on side)
+            case TORCH:
+            case SOUL_TORCH:
+            case REDSTONE_TORCH:
+            // Signs, buttons, levers, ladders (item = block name)
+            case OAK_SIGN:
+            case ACACIA_SIGN:
+            case BIRCH_SIGN:
+            case DARK_OAK_SIGN:
+            case JUNGLE_SIGN:
+            case SPRUCE_SIGN:
+            case CRIMSON_SIGN:
+            case WARPED_SIGN:
+            case MANGROVE_SIGN:
+            case CHERRY_SIGN:
+            case BAMBOO_SIGN:
+            case LEVER:
+            case STONE_BUTTON:
+            case OAK_BUTTON:
+            case ACACIA_BUTTON:
+            case BIRCH_BUTTON:
+            case DARK_OAK_BUTTON:
+            case JUNGLE_BUTTON:
+            case SPRUCE_BUTTON:
+            case CRIMSON_BUTTON:
+            case WARPED_BUTTON:
+            case MANGROVE_BUTTON:
+            case CHERRY_BUTTON:
+            case BAMBOO_BUTTON:
+            case POLISHED_BLACKSTONE_BUTTON:
+            case LADDER:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Returns true if item is a placed attachable block (wall-mounted, implements Directional).
+     * Used to detect attached blocks on concealing blocks.
+     * @param item Material type to be checked.
+     * @return true if item is an attachable block, false otherwise.
      */
     public static boolean isAttachableItem(Material item) {
 
         if (item != null) {
             switch (item) {
+                // Wall-mounted torches only (Directional)
                 case WALL_TORCH:
                 case SOUL_WALL_TORCH:
+                case REDSTONE_WALL_TORCH:
                 case OAK_SIGN:
                 case ACACIA_SIGN:
                 case BIRCH_SIGN:
