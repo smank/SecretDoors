@@ -103,20 +103,12 @@ public class SecretDoor implements SecretOpenable {
             return;
         }
 
-        BlockFace[] faces = { BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN };
+        BlockFace[] faces = { BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
         for (BlockFace face : faces) {
             for (int i = 0; i < 2; i++) {
                 Block attached = blocks[i].getRelative(face);
 
-                /*// NOTE: special case: vines
-                if (attached.getType() == Material.VINE) {
-
-                    // if the vine isn't attached to the door block, skip it
-                    if (((Vine) attached.getState()).isOnFace(face))
-                        continue;
-                }*/
-
-                // if it is a simple attachable item
+                // if it is a simple attachable item (wall-mounted, Directional)
                 Directional sam = SecretDoorHelper.getAttachableFromBlock(attached);
                 if (SecretDoors.DEBUG && sam != null) {
                     System.out.println("Found attachable at " + attached.getLocation() +
@@ -138,27 +130,52 @@ public class SecretDoor implements SecretOpenable {
                         System.out.println("  ADDING attachment: " + attached.getType() + " at " + attached.getLocation());
                     }
 
-                    // First time we've been here, initialize the arrays
-                    if (attachedCount == 0) {
-                        attachedBlocks = new Block[8];
-                        attachedMats = new Material[8];
-                        attachedData = new BlockData[8];
-                        signText = new String[8][4];
-                    }
-
-                    // handle sign text
-
-                    if (isSignMaterial(attached.getType())) {
-                        handleSignText(attached);
-                    }
-
-                    attachedBlocks[attachedCount] = attached;
-                    attachedMats[attachedCount] = attached.getType();
-                    // Clone the BlockData to avoid issues with mutable references
-                    attachedData[attachedCount] = attached.getBlockData().clone();
-                    attachedCount++;
+                    addAttachment(attached);
                 }
             }
+        }
+
+        // Check for floor torches on top of concealing blocks (not Directional)
+        for (int i = 0; i < 2; i++) {
+            Block onTop = blocks[i].getRelative(BlockFace.UP);
+            if (isFloorTorch(onTop.getType())) {
+                if (SecretDoors.DEBUG) {
+                    System.out.println("  ADDING floor torch: " + onTop.getType() + " at " + onTop.getLocation());
+                }
+                addAttachment(onTop);
+            }
+        }
+    }
+
+    private void addAttachment(Block attached) {
+        // First time we've been here, initialize the arrays
+        if (attachedCount == 0) {
+            attachedBlocks = new Block[12];
+            attachedMats = new Material[12];
+            attachedData = new BlockData[12];
+            signText = new String[12][4];
+        }
+
+        // handle sign text
+        if (isSignMaterial(attached.getType())) {
+            handleSignText(attached);
+        }
+
+        attachedBlocks[attachedCount] = attached;
+        attachedMats[attachedCount] = attached.getType();
+        // Clone the BlockData to avoid issues with mutable references
+        attachedData[attachedCount] = attached.getBlockData().clone();
+        attachedCount++;
+    }
+
+    private static boolean isFloorTorch(Material mat) {
+        switch (mat) {
+            case TORCH:
+            case SOUL_TORCH:
+            case REDSTONE_TORCH:
+                return true;
+            default:
+                return false;
         }
     }
 

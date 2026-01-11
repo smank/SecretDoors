@@ -159,6 +159,18 @@ public class SecretDoorHelper {
             case MANGROVE_SIGN:
             case CHERRY_SIGN:
             case BAMBOO_SIGN:
+            // Hanging signs (separate items)
+            case OAK_HANGING_SIGN:
+            case ACACIA_HANGING_SIGN:
+            case BIRCH_HANGING_SIGN:
+            case DARK_OAK_HANGING_SIGN:
+            case JUNGLE_HANGING_SIGN:
+            case SPRUCE_HANGING_SIGN:
+            case CRIMSON_HANGING_SIGN:
+            case WARPED_HANGING_SIGN:
+            case MANGROVE_HANGING_SIGN:
+            case CHERRY_HANGING_SIGN:
+            case BAMBOO_HANGING_SIGN:
             case LEVER:
             case STONE_BUTTON:
             case OAK_BUTTON:

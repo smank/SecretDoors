@@ -141,12 +141,26 @@ public class PlayerListener implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
             Block clicked = event.getClickedBlock();
+
+            // Skip if player is placing an attachable item
+            ItemStack heldItem = event.getItem();
+            if (SecretDoors.DEBUG) {
+                System.out.println("onTrapdoorClick: clicked=" + clicked.getType() + " heldItem=" + (heldItem != null ? heldItem.getType() : "null"));
+                System.out.println("  isPlaceableAttachable=" + (heldItem != null ? SecretDoorHelper.isPlaceableAttachable(heldItem.getType()) : "n/a"));
+            }
+            if (heldItem != null && SecretDoorHelper.isPlaceableAttachable(heldItem.getType())) {
+                if (SecretDoors.DEBUG) {
+                    System.out.println("  RETURNING - player placing attachable");
+                }
+                return;
+            }
+
             SecretTrapdoor door = null;
 
             if (plugin.canBeSecretTrapdoor(clicked))
-                door = new SecretTrapdoor(clicked, clicked.getRelative(BlockFace.UP), false);
+                door = new SecretTrapdoor(clicked, clicked.getRelative(BlockFace.UP), false, plugin.shouldPreserveAttachments());
             else if (plugin.canBeSecretTrapdoor(clicked.getRelative(BlockFace.DOWN)))
-                door = new SecretTrapdoor(clicked.getRelative(BlockFace.DOWN), clicked, true);
+                door = new SecretTrapdoor(clicked.getRelative(BlockFace.DOWN), clicked, true, plugin.shouldPreserveAttachments());
             else if (plugin.isSecretDoor(clicked))
                 plugin.closeDoor(clicked);
 
@@ -173,13 +187,23 @@ public class PlayerListener implements Listener {
         // right click and is door
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && SecretDoorHelper.isValidTrapDoor(door)) {
 
-            // is a closed secret door
-            if (plugin.canBeSecretDoor(door)) {
-                //BlockFace doorFace = SecretDoorHelper.getDoorFace(door);
+            // Skip if player is placing an attachable item
+            ItemStack heldItem = event.getItem();
+            if (SecretDoors.DEBUG) {
+                System.out.println("onTrapDoorCloseClick: clicked=" + door.getType() + " heldItem=" + (heldItem != null ? heldItem.getType() : "null"));
+            }
+            if (heldItem != null && SecretDoorHelper.isPlaceableAttachable(heldItem.getType())) {
+                if (SecretDoors.DEBUG) {
+                    System.out.println("  RETURNING - player placing attachable");
+                }
+                return;
+            }
 
+            // is a closed secret door
+            if (plugin.canBeSecretTrapdoor(door)) {
                 // get the blocks in-front of the door
                 Block other = door.getRelative(BlockFace.UP);
-                plugin.addDoor(new SecretTrapdoor(door, other, true)).open();
+                plugin.addDoor(new SecretTrapdoor(door, other, true, plugin.shouldPreserveAttachments())).open();
             }
             // is an opened secret door
             else if (plugin.isSecretDoor(SecretDoorHelper.getKeyFromBlock(door))) {
