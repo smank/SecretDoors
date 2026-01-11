@@ -130,6 +130,7 @@ public class SecretDoor implements SecretOpenable {
                         attachedBlocks = new Block[8];
                         attachedMats = new Material[8];
                         attachedData = new BlockData[8];
+                        signText = new String[8][4];
                     }
 
                     // handle sign text
@@ -150,10 +151,6 @@ public class SecretDoor implements SecretOpenable {
     }
 
     private void handleSignText(Block block) {
-        // If it is the first sign, initialize the array
-        if (attachedCount == 0) {
-            signText = new String[8][4];
-        }
         Sign s = (Sign) (block.getState());
         signText[attachedCount] = s.getLines();
     }
