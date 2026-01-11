@@ -1,6 +1,6 @@
 # SecretDoors
 
-A Minecraft plugin that lets you create hidden doors disguised as regular blocks - just like in the movies!
+A Minecraft plugin that lets you create hidden doors disguised as regular blocks.
 
 [![GitHub release](https://img.shields.io/github/v/release/smank/SecretDoors)](https://github.com/smank/SecretDoors/releases)
 [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-green)](https://papermc.io/)
