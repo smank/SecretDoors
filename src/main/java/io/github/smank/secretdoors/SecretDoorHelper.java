@@ -14,7 +14,7 @@
  * 	and with all your mind.
  */
 
-package com.development.trainerlord.secretdoors;
+package io.github.smank.secretdoors;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -52,6 +52,17 @@ public class SecretDoorHelper {
             case SPRUCE_DOOR:
             case CRIMSON_DOOR:
             case WARPED_DOOR:
+            case MANGROVE_DOOR:
+            case CHERRY_DOOR:
+            case BAMBOO_DOOR:
+            case COPPER_DOOR:
+            case EXPOSED_COPPER_DOOR:
+            case WEATHERED_COPPER_DOOR:
+            case OXIDIZED_COPPER_DOOR:
+            case WAXED_COPPER_DOOR:
+            case WAXED_EXPOSED_COPPER_DOOR:
+            case WAXED_WEATHERED_COPPER_DOOR:
+            case WAXED_OXIDIZED_COPPER_DOOR:
                 return true;
         }
 
@@ -70,6 +81,18 @@ public class SecretDoorHelper {
             case SPRUCE_TRAPDOOR:
             case CRIMSON_TRAPDOOR:
             case WARPED_TRAPDOOR:
+            case MANGROVE_TRAPDOOR:
+            case CHERRY_TRAPDOOR:
+            case BAMBOO_TRAPDOOR:
+            case IRON_TRAPDOOR:
+            case COPPER_TRAPDOOR:
+            case EXPOSED_COPPER_TRAPDOOR:
+            case WEATHERED_COPPER_TRAPDOOR:
+            case OXIDIZED_COPPER_TRAPDOOR:
+            case WAXED_COPPER_TRAPDOOR:
+            case WAXED_EXPOSED_COPPER_TRAPDOOR:
+            case WAXED_WEATHERED_COPPER_TRAPDOOR:
+            case WAXED_OXIDIZED_COPPER_TRAPDOOR:
                 return true;
         }
 
@@ -121,7 +144,8 @@ public class SecretDoorHelper {
 
         if (item != null) {
             switch (item) {
-                case TORCH:
+                case WALL_TORCH:
+                case SOUL_WALL_TORCH:
                 case OAK_SIGN:
                 case ACACIA_SIGN:
                 case BIRCH_SIGN:
@@ -130,6 +154,9 @@ public class SecretDoorHelper {
                 case SPRUCE_SIGN:
                 case CRIMSON_SIGN:
                 case WARPED_SIGN:
+                case MANGROVE_SIGN:
+                case CHERRY_SIGN:
+                case BAMBOO_SIGN:
                 case OAK_WALL_SIGN:
                 case ACACIA_WALL_SIGN:
                 case BIRCH_WALL_SIGN:
@@ -138,6 +165,31 @@ public class SecretDoorHelper {
                 case SPRUCE_WALL_SIGN:
                 case CRIMSON_WALL_SIGN:
                 case WARPED_WALL_SIGN:
+                case MANGROVE_WALL_SIGN:
+                case CHERRY_WALL_SIGN:
+                case BAMBOO_WALL_SIGN:
+                case OAK_HANGING_SIGN:
+                case ACACIA_HANGING_SIGN:
+                case BIRCH_HANGING_SIGN:
+                case DARK_OAK_HANGING_SIGN:
+                case JUNGLE_HANGING_SIGN:
+                case SPRUCE_HANGING_SIGN:
+                case CRIMSON_HANGING_SIGN:
+                case WARPED_HANGING_SIGN:
+                case MANGROVE_HANGING_SIGN:
+                case CHERRY_HANGING_SIGN:
+                case BAMBOO_HANGING_SIGN:
+                case OAK_WALL_HANGING_SIGN:
+                case ACACIA_WALL_HANGING_SIGN:
+                case BIRCH_WALL_HANGING_SIGN:
+                case DARK_OAK_WALL_HANGING_SIGN:
+                case JUNGLE_WALL_HANGING_SIGN:
+                case SPRUCE_WALL_HANGING_SIGN:
+                case CRIMSON_WALL_HANGING_SIGN:
+                case WARPED_WALL_HANGING_SIGN:
+                case MANGROVE_WALL_HANGING_SIGN:
+                case CHERRY_WALL_HANGING_SIGN:
+                case BAMBOO_WALL_HANGING_SIGN:
                 case LEVER:
                 case STONE_BUTTON:
                 case OAK_BUTTON:
@@ -146,6 +198,12 @@ public class SecretDoorHelper {
                 case DARK_OAK_BUTTON:
                 case JUNGLE_BUTTON:
                 case SPRUCE_BUTTON:
+                case CRIMSON_BUTTON:
+                case WARPED_BUTTON:
+                case MANGROVE_BUTTON:
+                case CHERRY_BUTTON:
+                case BAMBOO_BUTTON:
+                case POLISHED_BLACKSTONE_BUTTON:
                 case LADDER:
                     return true;
                 default:

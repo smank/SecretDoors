@@ -14,7 +14,7 @@
  * 	and with all your mind.
  */
 
-package com.development.trainerlord.secretdoors;
+package io.github.smank.secretdoors;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -57,7 +57,7 @@ public class SecretDoor implements SecretOpenable {
     // Contains the text of every sign that is attached to this door.
     private String[][] signText;
 
-    public SecretDoor(Block door, Block other, SecretDoorHelper.Orientation orientation) {
+    public SecretDoor(Block door, Block other, SecretDoorHelper.Orientation orientation, boolean preserveAttachments) {
 
         if (SecretDoors.DEBUG) {
             System.out.println("Door constructed at location: " + door.getLocation());
@@ -99,6 +99,10 @@ public class SecretDoor implements SecretOpenable {
         this.orientation = orientation;
 
         // handle attached blocks (torches, signs, etc)
+        if (!preserveAttachments) {
+            return;
+        }
+
         BlockFace[] faces = { BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST, BlockFace.UP, BlockFace.DOWN };
         for (BlockFace face : faces) {
             for (int i = 0; i < 2; i++) {
@@ -130,14 +134,8 @@ public class SecretDoor implements SecretOpenable {
 
                     // handle sign text
 
-                    switch (attached.getType()) {
-                        case OAK_WALL_SIGN:
-                        case ACACIA_WALL_SIGN:
-                        case BIRCH_WALL_SIGN:
-                        case DARK_OAK_WALL_SIGN:
-                        case JUNGLE_WALL_SIGN:
-                        case SPRUCE_WALL_SIGN:
-                            handleSignText(attached);
+                    if (isSignMaterial(attached.getType())) {
+                        handleSignText(attached);
                     }
 
                     attachedBlocks[attachedCount] = attached;
@@ -160,6 +158,58 @@ public class SecretDoor implements SecretOpenable {
         signText[attachedCount] = s.getLines();
     }
 
+    private static boolean isSignMaterial(Material mat) {
+        switch (mat) {
+            case OAK_SIGN:
+            case ACACIA_SIGN:
+            case BIRCH_SIGN:
+            case DARK_OAK_SIGN:
+            case JUNGLE_SIGN:
+            case SPRUCE_SIGN:
+            case CRIMSON_SIGN:
+            case WARPED_SIGN:
+            case MANGROVE_SIGN:
+            case CHERRY_SIGN:
+            case BAMBOO_SIGN:
+            case OAK_WALL_SIGN:
+            case ACACIA_WALL_SIGN:
+            case BIRCH_WALL_SIGN:
+            case DARK_OAK_WALL_SIGN:
+            case JUNGLE_WALL_SIGN:
+            case SPRUCE_WALL_SIGN:
+            case CRIMSON_WALL_SIGN:
+            case WARPED_WALL_SIGN:
+            case MANGROVE_WALL_SIGN:
+            case CHERRY_WALL_SIGN:
+            case BAMBOO_WALL_SIGN:
+            case OAK_HANGING_SIGN:
+            case ACACIA_HANGING_SIGN:
+            case BIRCH_HANGING_SIGN:
+            case DARK_OAK_HANGING_SIGN:
+            case JUNGLE_HANGING_SIGN:
+            case SPRUCE_HANGING_SIGN:
+            case CRIMSON_HANGING_SIGN:
+            case WARPED_HANGING_SIGN:
+            case MANGROVE_HANGING_SIGN:
+            case CHERRY_HANGING_SIGN:
+            case BAMBOO_HANGING_SIGN:
+            case OAK_WALL_HANGING_SIGN:
+            case ACACIA_WALL_HANGING_SIGN:
+            case BIRCH_WALL_HANGING_SIGN:
+            case DARK_OAK_WALL_HANGING_SIGN:
+            case JUNGLE_WALL_HANGING_SIGN:
+            case SPRUCE_WALL_HANGING_SIGN:
+            case CRIMSON_WALL_HANGING_SIGN:
+            case WARPED_WALL_HANGING_SIGN:
+            case MANGROVE_WALL_HANGING_SIGN:
+            case CHERRY_WALL_HANGING_SIGN:
+            case BAMBOO_WALL_HANGING_SIGN:
+                return true;
+            default:
+                return false;
+        }
+    }
+
 
     @Override
     public void close() {
@@ -174,16 +224,15 @@ public class SecretDoor implements SecretOpenable {
 //			this.blocks[i].getState().setData(this.data[i]);
             this.blocks[i].getState().setBlockData(this.data[i]);
         }
-        //Test
-        /*
+
+        // Close the actual door
         BlockState doorState = this.doorBlock.getState();
         Door doorData = (Door) doorState.getBlockData();
         doorData.setOpen(false);
         doorState.setBlockData(doorData);
-        doorState.update();*/
+        doorState.update();
 
-
-
+        doorBlock.getWorld().playEffect(doorBlock.getLocation(), Effect.DOOR_TOGGLE, 0);
 
         // handle attached blocks
         for (int i = 0; i < attachedCount; i++) {
@@ -204,24 +253,12 @@ public class SecretDoor implements SecretOpenable {
             }
 
             // handle sign text
-            switch (attachedBlocks[i].getType()) {
-                case OAK_SIGN:
-                case ACACIA_SIGN:
-                case BIRCH_SIGN:
-                case DARK_OAK_SIGN:
-                case JUNGLE_SIGN:
-                case SPRUCE_SIGN:
-                case OAK_WALL_SIGN:
-                case ACACIA_WALL_SIGN:
-                case BIRCH_WALL_SIGN:
-                case DARK_OAK_WALL_SIGN:
-                case JUNGLE_WALL_SIGN:
-                case SPRUCE_WALL_SIGN:
-                    Sign s = (Sign) (attachedBlocks[i].getState());
-                    for (int j = 0; j < 4; j++) {
-                        s.setLine(j, signText[i][j]);
-                    }
-                    s.update(true);
+            if (isSignMaterial(attachedBlocks[i].getType())) {
+                Sign s = (Sign) (attachedBlocks[i].getState());
+                for (int j = 0; j < 4; j++) {
+                    s.setLine(j, signText[i][j]);
+                }
+                s.update(true);
             }
         }
     }

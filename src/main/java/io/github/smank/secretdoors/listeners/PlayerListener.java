@@ -14,12 +14,12 @@
  * 	and with all your mind.
  */
 
-package com.development.trainerlord.secretdoors.listeners;
+package io.github.smank.secretdoors.listeners;
 
-import com.development.trainerlord.secretdoors.SecretDoor;
-import com.development.trainerlord.secretdoors.SecretDoorHelper;
-import com.development.trainerlord.secretdoors.SecretDoors;
-import com.development.trainerlord.secretdoors.SecretTrapdoor;
+import io.github.smank.secretdoors.SecretDoor;
+import io.github.smank.secretdoors.SecretDoorHelper;
+import io.github.smank.secretdoors.SecretDoors;
+import io.github.smank.secretdoors.SecretTrapdoor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
@@ -64,7 +64,7 @@ public class PlayerListener implements Listener {
 
                 // get the blocks in-front of the door
                 Block other = door.getRelative(doorFace);
-                plugin.addDoor(new SecretDoor(door, other, SecretDoorHelper.Orientation.DOOR_FIRST)).open();
+                plugin.addDoor(new SecretDoor(door, other, SecretDoorHelper.Orientation.DOOR_FIRST, plugin.shouldPreserveAttachments())).open();
             }
             // is an opened secret door
             else if (plugin.isSecretDoor(SecretDoorHelper.getKeyFromBlock(door))) {
@@ -102,7 +102,7 @@ public class PlayerListener implements Listener {
                 Block door      = clicked.getRelative(face, 2);
 
                 if (plugin.isValidBlock(block) && plugin.canBeSecretDoor(door)) {
-                    plugin.addDoor(new SecretDoor(door, block, SecretDoorHelper.Orientation.BLOCK_FIRST)).open();
+                    plugin.addDoor(new SecretDoor(door, block, SecretDoorHelper.Orientation.BLOCK_FIRST, plugin.shouldPreserveAttachments())).open();
                 }
             }
             // handle regular blocks (non-attachables)
@@ -119,7 +119,7 @@ public class PlayerListener implements Listener {
                 Block door      = clicked.getRelative(face);
 
                 if (plugin.canBeSecretDoor(door)) {
-                    plugin.addDoor(new SecretDoor(door, clicked, SecretDoorHelper.Orientation.BLOCK_FIRST)).open();
+                    plugin.addDoor(new SecretDoor(door, clicked, SecretDoorHelper.Orientation.BLOCK_FIRST, plugin.shouldPreserveAttachments())).open();
                 }
             }
         }

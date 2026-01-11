@@ -14,11 +14,11 @@
  * 	and with all your mind.
  */
 
-package com.development.trainerlord.secretdoors;
+package io.github.smank.secretdoors;
 
-import com.development.trainerlord.secretdoors.listeners.BlockListener;
-import com.development.trainerlord.secretdoors.listeners.PlayerListener;
-import com.development.trainerlord.secretdoors.listeners.PowerListener;
+import io.github.smank.secretdoors.listeners.BlockListener;
+import io.github.smank.secretdoors.listeners.PlayerListener;
+import io.github.smank.secretdoors.listeners.PowerListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -54,9 +54,10 @@ public class SecretDoors extends JavaPlugin {
     public static final String CONFIG_ENABLE_TRAPDOORS      = "enable-trapdoors";
     public static final String CONFIG_ENABLE_WHITELIST      = "enable-whitelist";
     public static final String CONFIG_CLOSE_TIME            = "close-time-seconds";
+    public static final String CONFIG_PRESERVE_ATTACHMENTS  = "preserve-attachments";
 
     // Used for enabling debug println's throughout the code - should always be false in a release.
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
 
     // Represents the collection of materials that *cannot* be used to create SecretOpenable
@@ -208,6 +209,13 @@ public class SecretDoors extends JavaPlugin {
         }
 
         return false;
+    }
+
+    /**
+     * @return true if attached blocks (signs, torches, etc.) should be preserved when doors open/close.
+     */
+    public boolean shouldPreserveAttachments() {
+        return getConfig().getBoolean(CONFIG_PRESERVE_ATTACHMENTS, true);
     }
 
     /**

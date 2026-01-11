@@ -14,12 +14,12 @@
  * 	and with all your mind.
  */
 
-package com.development.trainerlord.secretdoors.listeners;
+package io.github.smank.secretdoors.listeners;
 
-import com.development.trainerlord.secretdoors.SecretDoor;
-import com.development.trainerlord.secretdoors.SecretDoorHelper;
-import com.development.trainerlord.secretdoors.SecretDoors;
-import com.development.trainerlord.secretdoors.SecretTrapdoor;
+import io.github.smank.secretdoors.SecretDoor;
+import io.github.smank.secretdoors.SecretDoorHelper;
+import io.github.smank.secretdoors.SecretDoors;
+import io.github.smank.secretdoors.SecretTrapdoor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
@@ -60,7 +60,8 @@ public class PowerListener implements Listener {
             // open the door
             if (!isOpenedDoor(door) && plugin.canBeSecretDoor(door) && !plugin.isSecretDoor(key)) {
                 plugin.addDoor(new SecretDoor(door, door.getRelative(SecretDoorHelper.getDoorFace(door)),
-                               SecretDoorHelper.Orientation.DOOR_FIRST
+                               SecretDoorHelper.Orientation.DOOR_FIRST,
+                               plugin.shouldPreserveAttachments()
                 )).open();
             }
 

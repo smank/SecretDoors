@@ -14,7 +14,7 @@
  * 	and with all your mind.
  */
 
-package com.development.trainerlord.secretdoors;
+package io.github.smank.secretdoors;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -39,25 +39,16 @@ public class SecretTrapdoor implements SecretOpenable {
     private boolean fromAbove;
 
     public SecretTrapdoor(Block doorBlock, Block above, boolean fromAbove) {
-        switch (doorBlock.getType()) {
-            case OAK_TRAPDOOR:
-            case ACACIA_TRAPDOOR:
-            case BIRCH_TRAPDOOR:
-            case DARK_OAK_TRAPDOOR:
-            case JUNGLE_TRAPDOOR:
-            case SPRUCE_TRAPDOOR:
-            case CRIMSON_TRAPDOOR:
-            case WARPED_TRAPDOOR:
-                this.doorBlock = doorBlock;
-                this.fromAbove = fromAbove;
-                direction = ((Directional) doorBlock.getBlockData()).getFacing().getOppositeFace();//new TrapDoor(doorBlock.getType(), doorBlock.getData()).getAttachedFace().getOppositeFace();
-                this.above = above;
+        if (SecretDoorHelper.isValidTrapDoor(doorBlock)) {
+            this.doorBlock = doorBlock;
+            this.fromAbove = fromAbove;
+            direction = ((Directional) doorBlock.getBlockData()).getFacing().getOppositeFace();
+            this.above = above;
 
-                mat = this.above.getType();
-                aboveData = this.above.getBlockData();
-                doorData = this.doorBlock.getBlockData();
+            mat = this.above.getType();
+            aboveData = this.above.getBlockData();
+            doorData = this.doorBlock.getBlockData();
         }
-
     }
 
     @Override
@@ -77,13 +68,20 @@ public class SecretTrapdoor implements SecretOpenable {
 
     @Override
     public void close() {
-        //((TrapDoor) doorBlock.getBlockData()).setOpen(false);
+        // Close the actual trapdoor
+        BlockState doorState = this.doorBlock.getState();
+        TrapDoor trapDoorData = (TrapDoor) doorState.getBlockData();
+        trapDoorData.setOpen(false);
+        doorState.setBlockData(trapDoorData);
+        doorState.update();
+
         above.setType(mat);
+        above.setBlockData(aboveData);
         doorBlock.getWorld().playEffect(doorBlock.getLocation(), Effect.DOOR_TOGGLE, 0);
     }
 
     @Override
     public Block getKey() {
-        return doorBlock.getType() == Material.LADDER ? doorBlock : null;
+        return doorBlock;
     }
 }

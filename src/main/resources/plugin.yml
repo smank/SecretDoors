@@ -1,29 +1,33 @@
 name: SecretDoors
-main: com.github.snnappie.secretdoors.SecretDoors
-version: 1.4.2a
-author: Snnappie
+main: io.github.smank.secretdoors.SecretDoors
+version: ${version}
+authors: [smank, Trainerlord, Snnappie, dill01, MrChick]
+api-version: '1.21'
 description: Secret doors the way you know them from the movies!
+load: STARTUP
+
+commands:
+  secretdoors:
+    description: Reloads the config file
+    usage: /<command> reload
+    permission: secretdoors.reload
+    permission-message: You don't have permissions to do that!
+    aliases: [sd]
 
 permissions:
   secretdoors.*:
     description: Gives access to all Secret Doors permissions
+    default: op
     children:
       secretdoors.use: true
       secretdoors.reload: true
       secretdoors.create: true
-    secretdoors.use:
-      description: Allows players to open and close Secret Doors
-      default: op
-    secretdoors.reload:
-      description: Allows players to use /secretdoors reload and /sd reload
-      default: op
-    secretdoors.create:
-      description: Allows creation of a SecretDoor.
-      default: op
-commands:
-  secretdoors:
-    description: Reloads the config file
-    usage: Usage -> /secretdoors reload
-    aliases: sd
-    permission: secretdoor.reload
-    permission-message: You don't have permissions to do that!
+  secretdoors.use:
+    description: Allows players to open and close Secret Doors
+    default: op
+  secretdoors.reload:
+    description: Allows players to use /secretdoors reload and /sd reload
+    default: op
+  secretdoors.create:
+    description: Allows creation of a SecretDoor.
+    default: op

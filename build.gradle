@@ -1,21 +1,21 @@
 buildscript {
     repositories {
-        jcenter()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
-    id 'kr.entree.spigradle' version '2.2.3'
+    id 'com.gradleup.shadow' version '8.3.0'
+    id 'kr.entree.spigradle' version '2.4.3'
     id 'java'
     id 'jacoco'
 }
 
 apply from: "$rootDir/gradle/jacoco.gradle"
 
-sourceCompatibility = 8
-targetCompatibility = 8
+sourceCompatibility = 21
+targetCompatibility = 21
 
 ext {
     mcVersion = project.property("mcVersion")
@@ -67,16 +67,14 @@ spigot {
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs += ["-parameters"]
-    options.fork = true
-    options.forkOptions.executable = 'javac'
 }
 
-archivesBaseName = project.property("pluginName")
+base {
+    archivesName = project.property("pluginName")
+}
 
 repositories {
-
-    jcenter()
-
+    mavenCentral()
     spigot()
 //    bungeecord()
 //    paper()
@@ -86,24 +84,21 @@ repositories {
 }
 
 dependencies {
-    compileOnly lombok()
-    annotationProcessor lombok()
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-    compileOnly spigot(mcVersion)
-
-    //Add dependencies here
+    compileOnly "org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT"
 
     //Test dependencies
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.+'
-    testImplementation "org.mockito:mockito-core:3.+"
-    testImplementation mockBukkit()
-    testImplementation 'org.assertj:assertj-core:3.+'
-    testImplementation lombok()
-    testAnnotationProcessor lombok()
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
+    testImplementation 'org.assertj:assertj-core:3.25.3'
+    testImplementation 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 shadowJar {
-    classifier = ''
+    archiveClassifier.set('')
 //    dependencies {
 //        include(dependency('co.aikar:acf-paper:0.5.0-SNAPSHOT'))
 //    }

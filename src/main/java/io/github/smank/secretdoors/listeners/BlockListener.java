@@ -14,9 +14,9 @@
  * 	and with all your mind.
  */
 
-package com.development.trainerlord.secretdoors.listeners;
+package io.github.smank.secretdoors.listeners;
 
-import com.development.trainerlord.secretdoors.SecretDoorHelper;
+import io.github.smank.secretdoors.SecretDoorHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -26,7 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import com.development.trainerlord.secretdoors.SecretDoors;
+import io.github.smank.secretdoors.SecretDoors;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 /**
