@@ -141,7 +141,7 @@ The compiled JAR will be at `build/libs/SecretDoors-x.x.x.jar`
 
 ## License
 
-This project uses a blessing-style license. See the source file headers for the full text.
+GPL v3. See [LICENSE](LICENSE) for details.
 
 ## Links
 
