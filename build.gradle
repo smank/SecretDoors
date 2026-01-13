@@ -9,10 +9,7 @@ plugins {
     id 'com.gradleup.shadow' version '8.3.0'
     id 'kr.entree.spigradle' version '2.4.3'
     id 'java'
-    id 'jacoco'
 }
-
-apply from: "$rootDir/gradle/jacoco.gradle"
 
 sourceCompatibility = 21
 targetCompatibility = 21
@@ -43,8 +40,7 @@ spigot {
             children = [
                     'secretdoors.use':true,
                     'secretdoors.reload':true,
-                    'secretdoors.create':true,
-                    'ws.tp.world':true
+                    'secretdoors.create':true
             ]
         }
         'secretdoors.use' {
@@ -88,13 +84,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     compileOnly "org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT"
-
-    //Test dependencies
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
-    testImplementation 'org.mockito:mockito-core:5.11.0'
-    testImplementation 'org.assertj:assertj-core:3.25.3'
-    testImplementation 'org.projectlombok:lombok:1.18.30'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 shadowJar {
@@ -107,14 +96,6 @@ shadowJar {
 }
 
 tasks.build.dependsOn(shadowJar)
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-    ignoreFailures = false
-}
 
 processResources {
     project.properties.put("version", this.version)
