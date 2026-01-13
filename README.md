@@ -1,5 +1,7 @@
 # SecretDoors
 
+The classic plugin, updated for 1.21.1.
+
 A Spigot/Paper plugin for Minecraft that lets you create hidden passages disguised as normal blocks. Place a door behind bookshelves, stone walls, or any solid block - then right-click to reveal the secret entrance.
 
 [![GitHub release](https://img.shields.io/github/v/release/smank/SecretDoors)](https://github.com/smank/SecretDoors/releases)
@@ -9,19 +11,19 @@ A Spigot/Paper plugin for Minecraft that lets you create hidden passages disguis
 
 Secret doors work by hiding a real Minecraft door behind "concealing blocks." When activated, the concealing blocks temporarily disappear and the door opens, creating a passage. When closed, everything is restored to its original state.
 
-### Creating a Secret Door
+#### Secret Door
 
-1. **Place a door** - Any wooden door works (Oak, Spruce, Birch, etc.)
-2. **Build concealing blocks in front** - Place solid blocks directly in front of the closed door (both the top and bottom block positions)
-3. **Activate it** - Right-click either the concealing blocks or the door itself
+1. Place any wooden door
+2. Build solid blocks directly in front of the closed door (both top and bottom)
+3. Right-click the blocks or door to open/close
 
 https://github.com/user-attachments/assets/6ad94e23-9f42-4338-aff8-24f757920284
 
-### Creating a Secret Trapdoor
+#### Secret Trapdoor
 
-1. **Place a trapdoor** - Must be attached to the upper half of a block (flip it so it sits on top)
-2. **Place a concealing block above it** - One solid block directly on top
-3. **Activate it** - Right-click the concealing block or the trapdoor
+1. Place a trapdoor on the upper half of a block
+2. Place a solid block directly on top
+3. Right-click to open/close
 
 https://github.com/user-attachments/assets/c9c8acae-136f-49fd-a67f-a1ecac8ccff9
 
