@@ -284,30 +284,46 @@ public class SecretDoors extends JavaPlugin {
      * @param door The key block to be closed.
      */
     public void closeDoor(Block door) {
+        if (DEBUG) {
+            System.out.println("closeDoor() called for " + door.getLocation());
+            System.out.println("  isSecretDoor=" + isSecretDoor(door));
+        }
         if (isSecretDoor(door)) {
 
             SecretOpenable secretDoor = this.doors.remove(door);
             Block key = secretDoor.getKey();
+            if (DEBUG) {
+                System.out.println("  Calling close() on SecretDoor");
+            }
             secretDoor.close();
             // remove and cancel the auto-task if the user manually closed the door
-            if (getConfig().getBoolean(CONFIG_ENABLE_TIMERS))
-                doorTasks.remove(key).cancel();
+            if (getConfig().getBoolean(CONFIG_ENABLE_TIMERS)) {
+                BukkitRunnable task = doorTasks.remove(key);
+                if (task != null) {
+                    task.cancel();
+                    if (DEBUG) {
+                        System.out.println("  Cancelled auto-close timer");
+                    }
+                }
+            }
         }
     }
 
     // Helper for timed closing of doors.
     // "Programmatically" closes the door without a player click.
     private void closeDoorAuto(Block door) {
+        if (DEBUG) {
+            System.out.println("closeDoorAuto() called for " + door.getLocation());
+            System.out.println("  isSecretDoor=" + isSecretDoor(door));
+        }
         if (isSecretDoor(door)) {
 
             SecretOpenable secretDoor = this.doors.remove(door);
             Block key = secretDoor.getKey();
+            if (DEBUG) {
+                System.out.println("  Calling close() on SecretDoor (auto)");
+            }
             secretDoor.close();
-            // NOTE: bit of an awkward hack, really.  This is relying on likely unspecified behavior of doors and
-            // trapdoors using the same bits to represented openness.  Should abstract this into the
-            // SecretOpenable interface.
-            key.setBlockData(key.getBlockData());//setData((byte) (key.getData() & ~0x4));
-            key.getWorld().playEffect(key.getLocation(), Effect.DOOR_TOGGLE, 0);
             doorTasks.remove(key);
         }
     }

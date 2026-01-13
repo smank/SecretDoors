@@ -92,7 +92,7 @@ public class SecretTrapdoor implements SecretOpenable {
                         signText = new String[6][4];
                     }
 
-                    if (isSignMaterial(attached.getType())) {
+                    if (SecretDoorHelper.isWallSign(attached.getType())) {
                         Sign s = (Sign) attached.getState();
                         signText[attachedCount] = s.getLines();
                     }
@@ -113,10 +113,10 @@ public class SecretTrapdoor implements SecretOpenable {
                 System.out.println("SecretTrapdoor: checking block on top of concealing block");
                 System.out.println("  Concealing block: " + above.getLocation() + " type=" + above.getType());
                 System.out.println("  Block on top: " + onTop.getLocation() + " type=" + onTop.getType());
-                System.out.println("  Is floor torch? " + isFloorTorch(onTop.getType()));
-                System.out.println("  Is standing sign? " + isStandingSign(onTop.getType()));
+                System.out.println("  Is floor torch? " + SecretDoorHelper.isFloorTorch(onTop.getType()));
+                System.out.println("  Is standing sign? " + SecretDoorHelper.isStandingSign(onTop.getType()));
             }
-            if (isFloorTorch(onTop.getType()) || isStandingSign(onTop.getType())) {
+            if (SecretDoorHelper.isFloorTorch(onTop.getType()) || SecretDoorHelper.isStandingSign(onTop.getType())) {
                 if (attachedCount == 0) {
                     attachedBlocks = new Block[6];
                     attachedMats = new Material[6];
@@ -125,7 +125,7 @@ public class SecretTrapdoor implements SecretOpenable {
                 }
 
                 // Save sign text if it's a sign
-                if (isStandingSign(onTop.getType())) {
+                if (SecretDoorHelper.isStandingSign(onTop.getType())) {
                     Sign s = (Sign) onTop.getState();
                     signText[attachedCount] = s.getLines();
                 }
@@ -141,55 +141,6 @@ public class SecretTrapdoor implements SecretOpenable {
             if (SecretDoors.DEBUG) {
                 System.out.println("SecretTrapdoor: total attachedCount = " + attachedCount);
             }
-        }
-    }
-
-    private static boolean isFloorTorch(Material mat) {
-        switch (mat) {
-            case TORCH:
-            case SOUL_TORCH:
-            case REDSTONE_TORCH:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private static boolean isStandingSign(Material mat) {
-        switch (mat) {
-            case OAK_SIGN:
-            case ACACIA_SIGN:
-            case BIRCH_SIGN:
-            case DARK_OAK_SIGN:
-            case JUNGLE_SIGN:
-            case SPRUCE_SIGN:
-            case CRIMSON_SIGN:
-            case WARPED_SIGN:
-            case MANGROVE_SIGN:
-            case CHERRY_SIGN:
-            case BAMBOO_SIGN:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private static boolean isSignMaterial(Material mat) {
-        switch (mat) {
-            case OAK_WALL_SIGN:
-            case ACACIA_WALL_SIGN:
-            case BIRCH_WALL_SIGN:
-            case DARK_OAK_WALL_SIGN:
-            case JUNGLE_WALL_SIGN:
-            case SPRUCE_WALL_SIGN:
-            case CRIMSON_WALL_SIGN:
-            case WARPED_WALL_SIGN:
-            case MANGROVE_WALL_SIGN:
-            case CHERRY_WALL_SIGN:
-            case BAMBOO_WALL_SIGN:
-                return true;
-            default:
-                return false;
         }
     }
 
@@ -241,7 +192,7 @@ public class SecretTrapdoor implements SecretOpenable {
             attachedBlocks[i].setType(attachedMats[i]);
             attachedBlocks[i].setBlockData(attachedData[i]);
 
-            if (isSignMaterial(attachedBlocks[i].getType()) || isStandingSign(attachedBlocks[i].getType())) {
+            if (SecretDoorHelper.isWallSign(attachedBlocks[i].getType()) || SecretDoorHelper.isStandingSign(attachedBlocks[i].getType())) {
                 Sign s = (Sign) attachedBlocks[i].getState();
                 for (int j = 0; j < 4; j++) {
                     s.setLine(j, signText[i][j]);

@@ -186,6 +186,33 @@ public class SecretDoorHelper {
             case BAMBOO_BUTTON:
             case POLISHED_BLACKSTONE_BUTTON:
             case LADDER:
+            // Banners (item form, becomes WALL_BANNER when placed on wall)
+            case WHITE_BANNER:
+            case ORANGE_BANNER:
+            case MAGENTA_BANNER:
+            case LIGHT_BLUE_BANNER:
+            case YELLOW_BANNER:
+            case LIME_BANNER:
+            case PINK_BANNER:
+            case GRAY_BANNER:
+            case LIGHT_GRAY_BANNER:
+            case CYAN_BANNER:
+            case PURPLE_BANNER:
+            case BLUE_BANNER:
+            case BROWN_BANNER:
+            case GREEN_BANNER:
+            case RED_BANNER:
+            case BLACK_BANNER:
+            // Skulls/heads (item form)
+            case SKELETON_SKULL:
+            case WITHER_SKELETON_SKULL:
+            case ZOMBIE_HEAD:
+            case PLAYER_HEAD:
+            case CREEPER_HEAD:
+            case DRAGON_HEAD:
+            case PIGLIN_HEAD:
+            // Tripwire hook
+            case TRIPWIRE_HOOK:
                 return true;
             default:
                 return false;
@@ -265,6 +292,33 @@ public class SecretDoorHelper {
                 case BAMBOO_BUTTON:
                 case POLISHED_BLACKSTONE_BUTTON:
                 case LADDER:
+                // Wall banners
+                case WHITE_WALL_BANNER:
+                case ORANGE_WALL_BANNER:
+                case MAGENTA_WALL_BANNER:
+                case LIGHT_BLUE_WALL_BANNER:
+                case YELLOW_WALL_BANNER:
+                case LIME_WALL_BANNER:
+                case PINK_WALL_BANNER:
+                case GRAY_WALL_BANNER:
+                case LIGHT_GRAY_WALL_BANNER:
+                case CYAN_WALL_BANNER:
+                case PURPLE_WALL_BANNER:
+                case BLUE_WALL_BANNER:
+                case BROWN_WALL_BANNER:
+                case GREEN_WALL_BANNER:
+                case RED_WALL_BANNER:
+                case BLACK_WALL_BANNER:
+                // Wall skulls/heads
+                case SKELETON_WALL_SKULL:
+                case WITHER_SKELETON_WALL_SKULL:
+                case ZOMBIE_WALL_HEAD:
+                case PLAYER_WALL_HEAD:
+                case CREEPER_WALL_HEAD:
+                case DRAGON_WALL_HEAD:
+                case PIGLIN_WALL_HEAD:
+                // Tripwire hook
+                case TRIPWIRE_HOOK:
                     return true;
                 default:
                     return false;
@@ -332,5 +386,92 @@ public class SecretDoorHelper {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Returns true if the material is a floor torch (placed on top of blocks).
+     */
+    public static boolean isFloorTorch(Material mat) {
+        switch (mat) {
+            case TORCH:
+            case SOUL_TORCH:
+            case REDSTONE_TORCH:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Returns true if the material is a standing sign (placed on top of blocks).
+     */
+    public static boolean isStandingSign(Material mat) {
+        switch (mat) {
+            case OAK_SIGN:
+            case ACACIA_SIGN:
+            case BIRCH_SIGN:
+            case DARK_OAK_SIGN:
+            case JUNGLE_SIGN:
+            case SPRUCE_SIGN:
+            case CRIMSON_SIGN:
+            case WARPED_SIGN:
+            case MANGROVE_SIGN:
+            case CHERRY_SIGN:
+            case BAMBOO_SIGN:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Returns true if the material is a wall-mounted sign.
+     */
+    public static boolean isWallSign(Material mat) {
+        switch (mat) {
+            case OAK_WALL_SIGN:
+            case ACACIA_WALL_SIGN:
+            case BIRCH_WALL_SIGN:
+            case DARK_OAK_WALL_SIGN:
+            case JUNGLE_WALL_SIGN:
+            case SPRUCE_WALL_SIGN:
+            case CRIMSON_WALL_SIGN:
+            case WARPED_WALL_SIGN:
+            case MANGROVE_WALL_SIGN:
+            case CHERRY_WALL_SIGN:
+            case BAMBOO_WALL_SIGN:
+            case OAK_HANGING_SIGN:
+            case ACACIA_HANGING_SIGN:
+            case BIRCH_HANGING_SIGN:
+            case DARK_OAK_HANGING_SIGN:
+            case JUNGLE_HANGING_SIGN:
+            case SPRUCE_HANGING_SIGN:
+            case CRIMSON_HANGING_SIGN:
+            case WARPED_HANGING_SIGN:
+            case MANGROVE_HANGING_SIGN:
+            case CHERRY_HANGING_SIGN:
+            case BAMBOO_HANGING_SIGN:
+            case OAK_WALL_HANGING_SIGN:
+            case ACACIA_WALL_HANGING_SIGN:
+            case BIRCH_WALL_HANGING_SIGN:
+            case DARK_OAK_WALL_HANGING_SIGN:
+            case JUNGLE_WALL_HANGING_SIGN:
+            case SPRUCE_WALL_HANGING_SIGN:
+            case CRIMSON_WALL_HANGING_SIGN:
+            case WARPED_WALL_HANGING_SIGN:
+            case MANGROVE_WALL_HANGING_SIGN:
+            case CHERRY_WALL_HANGING_SIGN:
+            case BAMBOO_WALL_HANGING_SIGN:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Returns true if the material is any type of sign (standing, wall, or hanging).
+     */
+    public static boolean isAnySign(Material mat) {
+        return isStandingSign(mat) || isWallSign(mat);
     }
 }

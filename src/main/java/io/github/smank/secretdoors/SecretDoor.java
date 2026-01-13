@@ -23,7 +23,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Attachable;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Door;
 
@@ -138,7 +137,7 @@ public class SecretDoor implements SecretOpenable {
         // Check for floor torches on top of concealing blocks (not Directional)
         for (int i = 0; i < 2; i++) {
             Block onTop = blocks[i].getRelative(BlockFace.UP);
-            if (isFloorTorch(onTop.getType())) {
+            if (SecretDoorHelper.isFloorTorch(onTop.getType())) {
                 if (SecretDoors.DEBUG) {
                     System.out.println("  ADDING floor torch: " + onTop.getType() + " at " + onTop.getLocation());
                 }
@@ -157,7 +156,7 @@ public class SecretDoor implements SecretOpenable {
         }
 
         // handle sign text
-        if (isSignMaterial(attached.getType())) {
+        if (SecretDoorHelper.isAnySign(attached.getType())) {
             handleSignText(attached);
         }
 
@@ -168,72 +167,9 @@ public class SecretDoor implements SecretOpenable {
         attachedCount++;
     }
 
-    private static boolean isFloorTorch(Material mat) {
-        switch (mat) {
-            case TORCH:
-            case SOUL_TORCH:
-            case REDSTONE_TORCH:
-                return true;
-            default:
-                return false;
-        }
-    }
-
     private void handleSignText(Block block) {
         Sign s = (Sign) (block.getState());
         signText[attachedCount] = s.getLines();
-    }
-
-    private static boolean isSignMaterial(Material mat) {
-        switch (mat) {
-            case OAK_SIGN:
-            case ACACIA_SIGN:
-            case BIRCH_SIGN:
-            case DARK_OAK_SIGN:
-            case JUNGLE_SIGN:
-            case SPRUCE_SIGN:
-            case CRIMSON_SIGN:
-            case WARPED_SIGN:
-            case MANGROVE_SIGN:
-            case CHERRY_SIGN:
-            case BAMBOO_SIGN:
-            case OAK_WALL_SIGN:
-            case ACACIA_WALL_SIGN:
-            case BIRCH_WALL_SIGN:
-            case DARK_OAK_WALL_SIGN:
-            case JUNGLE_WALL_SIGN:
-            case SPRUCE_WALL_SIGN:
-            case CRIMSON_WALL_SIGN:
-            case WARPED_WALL_SIGN:
-            case MANGROVE_WALL_SIGN:
-            case CHERRY_WALL_SIGN:
-            case BAMBOO_WALL_SIGN:
-            case OAK_HANGING_SIGN:
-            case ACACIA_HANGING_SIGN:
-            case BIRCH_HANGING_SIGN:
-            case DARK_OAK_HANGING_SIGN:
-            case JUNGLE_HANGING_SIGN:
-            case SPRUCE_HANGING_SIGN:
-            case CRIMSON_HANGING_SIGN:
-            case WARPED_HANGING_SIGN:
-            case MANGROVE_HANGING_SIGN:
-            case CHERRY_HANGING_SIGN:
-            case BAMBOO_HANGING_SIGN:
-            case OAK_WALL_HANGING_SIGN:
-            case ACACIA_WALL_HANGING_SIGN:
-            case BIRCH_WALL_HANGING_SIGN:
-            case DARK_OAK_WALL_HANGING_SIGN:
-            case JUNGLE_WALL_HANGING_SIGN:
-            case SPRUCE_WALL_HANGING_SIGN:
-            case CRIMSON_WALL_HANGING_SIGN:
-            case WARPED_WALL_HANGING_SIGN:
-            case MANGROVE_WALL_HANGING_SIGN:
-            case CHERRY_WALL_HANGING_SIGN:
-            case BAMBOO_WALL_HANGING_SIGN:
-                return true;
-            default:
-                return false;
-        }
     }
 
 
@@ -285,7 +221,7 @@ public class SecretDoor implements SecretOpenable {
             }
 
             // handle sign text
-            if (isSignMaterial(attachedBlocks[i].getType())) {
+            if (SecretDoorHelper.isAnySign(attachedBlocks[i].getType())) {
                 Sign s = (Sign) (attachedBlocks[i].getState());
                 for (int j = 0; j < 4; j++) {
                     s.setLine(j, signText[i][j]);
