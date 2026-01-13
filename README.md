@@ -1,86 +1,133 @@
 # SecretDoors
 
-A Minecraft plugin that lets you create hidden doors disguised as regular blocks.
+A Spigot/Paper plugin for Minecraft that lets you create hidden passages disguised as normal blocks. Place a door behind bookshelves, stone walls, or any solid block - then right-click to reveal the secret entrance.
 
 [![GitHub release](https://img.shields.io/github/v/release/smank/SecretDoors)](https://github.com/smank/SecretDoors/releases)
 [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-green)](https://papermc.io/)
 
 ## How It Works
 
-1. Place a door (any type) behind blocks like bookshelves, stone, or wood
-2. Right-click the blocks to open the secret passage
-3. Right-click again to close it - the blocks reappear hiding the door
+Secret doors work by hiding a real Minecraft door behind "concealing blocks." When activated, the concealing blocks temporarily disappear and the door opens, creating a passage. When closed, everything is restored to its original state.
 
-![Secret Door Demo](https://i.imgur.com/example.gif) <!-- TODO: Add actual demo gif -->
+### Creating a Secret Door
 
-## Features
+1. **Place a door** - Any wooden door works (Oak, Spruce, Birch, etc.)
+2. **Build concealing blocks in front** - Place solid blocks directly in front of the closed door (both the top and bottom block positions)
+3. **Activate it** - Right-click either the concealing blocks or the door itself
 
-- Works with all door types (Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Mangrove, Cherry, Bamboo, Crimson, Warped, Copper variants)
-- Works with all trapdoor types (including Iron)
-- Preserves attached items (signs with text, torches) when opening/closing
-- Redstone powered activation
-- Auto-close timer option
-- Permission support
-- Configurable block whitelist/blacklist
+```
+Side view (door facing east):
+
+[Stone][Door ][ Air ]     ->     [ Air ][Door ][ Air ]
+[Stone][Door ][ Air ]     ->     [ Air ][Door ][ Air ]
+        (closed)                       (open)
+```
+
+### Creating a Secret Trapdoor
+
+1. **Place a trapdoor** - Must be attached to the upper half of a block (flip it so it sits on top)
+2. **Place a concealing block above it** - One solid block directly on top
+3. **Activate it** - Right-click the concealing block or the trapdoor
+
+```
+Side view:
+
+[Stone]     ->     [ Air ]
+[Trap ]     ->     [Trap ] (open, flipped up)
+```
+
+### What Blocks Can Be Used?
+
+Almost any solid block can be a concealing block. By default, the plugin blacklists blocks that have their own interactions (chests, furnaces, pressure plates, etc.) to prevent conflicts.
+
+You can customize this in the config with either:
+- **Blacklist mode** (default): All blocks work except those listed
+- **Whitelist mode**: Only blocks you specify will work
 
 ## Installation
 
-1. Download the latest JAR from [Releases](https://github.com/smank/SecretDoors/releases)
-2. Place in your server's `plugins/` folder
-3. Restart the server
+1. Download `SecretDoors-2.0.0.jar` from [Releases](https://github.com/smank/SecretDoors/releases)
+2. Place the JAR in your server's `plugins/` folder
+3. Start or restart your server
+4. (Optional) Edit `plugins/SecretDoors/config.yml` to customize settings
 
-**Requirements:** Paper/Spigot 1.21.1+, Java 21+
+**Requirements:**
+- Spigot or Paper 1.21.1+
+- Java 21+
+
+## Features
+
+- **All door types supported** - Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Mangrove, Cherry, Bamboo, Crimson, Warped, and all Copper variants
+- **Trapdoor support** - All trapdoor types including Iron
+- **Attachment preservation** - Torches, signs, banners, skulls, and other items attached to concealing blocks are saved when the door opens and restored when it closes
+- **Sign text preserved** - Signs keep their text through open/close cycles
+- **Redstone activation** - Power the door or concealing blocks with redstone to open/close
+- **Auto-close timer** - Optionally have doors close automatically after a set time
+- **Permission system** - Control who can use and create secret doors
+- **Whitelist/Blacklist** - Configure exactly which blocks can be used as concealing blocks
 
 ## Commands
 
-| Command | Description | Permission |
-|---------|-------------|------------|
-| `/secretdoors reload` | Reload config | `secretdoors.reload` |
-| `/sd reload` | Alias for above | `secretdoors.reload` |
+| Command | Alias | Description |
+|---------|-------|-------------|
+| `/secretdoors reload` | `/sd reload` | Reload the configuration file |
 
 ## Permissions
 
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `secretdoors.*` | All permissions | OP |
-| `secretdoors.use` | Open/close secret doors | OP |
+| `secretdoors.*` | All SecretDoors permissions | OP |
+| `secretdoors.use` | Use (open/close) secret doors | OP |
 | `secretdoors.create` | Create new secret doors | OP |
-| `secretdoors.reload` | Reload configuration | OP |
+| `secretdoors.reload` | Use the reload command | OP |
+
+Set `use-permissions: false` in config to disable permission checking entirely.
 
 ## Configuration
 
+The config file is generated at `plugins/SecretDoors/config.yml` on first run.
+
 ```yaml
-# Enable permission checking
+# Check permissions before allowing door use/creation
 use-permissions: true
 
-# Allow redstone to open/close doors
+# Allow redstone signals to activate secret doors
 enable-redstone: true
 
-# Enable trapdoor support
+# Enable secret trapdoor functionality
 enable-trapdoors: true
 
-# Auto-close doors after a delay
+# Automatically close doors after a delay
 enable-timers: false
 close-time-seconds: 5
 
-# Preserve attached blocks (signs, torches) when door opens/closes
+# Save and restore attached blocks (torches, signs, banners, etc.)
 preserve-attachments: true
 
-# Use whitelist instead of blacklist
+# Use whitelist mode instead of blacklist mode
 enable-whitelist: false
 
-# Blocks that CANNOT be used as secret door covers
+# Blocks that CANNOT be used as concealing blocks (when enable-whitelist is false)
 blacklist:
   - CHEST
+  - TRAPPED_CHEST
+  - ENDER_CHEST
+  - BARREL
   - FURNACE
-  # ... etc
+  - BLAST_FURNACE
+  - SMOKER
+  - CRAFTING_TABLE
+  - DISPENSER
+  # ... pressure plates, redstone components, doors
 
-# If enable-whitelist is true, ONLY these blocks can be used
+# Blocks that CAN be used as concealing blocks (when enable-whitelist is true)
 whitelist:
   - STONE
   - COBBLESTONE
   - OAK_PLANKS
 ```
+
+Use `/sd reload` after editing the config to apply changes.
 
 ## Building from Source
 
@@ -90,25 +137,24 @@ cd SecretDoors
 ./gradlew build
 ```
 
-Output: `build/libs/SecretDoors-x.x.x.jar`
+The compiled JAR will be at `build/libs/SecretDoors-x.x.x.jar`
 
 ## Credits
 
 **Current Maintainer:**
-- smank - MC 1.21 update, bug fixes, modernization
+- [smank](https://github.com/smank) - Minecraft 1.21 update, attachment preservation, bug fixes
 
 **Original Authors:**
 - MrChick - Original concept
-- dill01 - Contributions
+- dill01 - Early contributions
 - Snnappie - Major rewrite
 - Trainerlord - Previous maintainer
 
 ## License
 
-This project maintains the original authors' blessing-style license. See source files for details.
+This project uses a blessing-style license. See the source file headers for the full text.
 
 ## Links
 
-- [GitHub Issues](https://github.com/smank/SecretDoors/issues) - Bug reports & feature requests
-- [SpigotMC](#) - Coming soon
-- [Modrinth](#) - Coming soon
+- [GitHub Issues](https://github.com/smank/SecretDoors/issues) - Report bugs or request features
+- [Releases](https://github.com/smank/SecretDoors/releases) - Download the latest version
