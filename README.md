@@ -85,49 +85,47 @@ Set `use-permissions: false` in config to disable permission checking entirely.
 
 ## Configuration
 
-The config file is generated at `plugins/SecretDoors/config.yml` on first run.
+The config file is generated at `plugins/SecretDoors/config.yml` on first run. Use `/sd reload` after editing to apply changes.
+
+### Basic Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `use-permissions` | `true` | Require permissions to use/create secret doors |
+| `enable-redstone` | `true` | Allow redstone signals to open/close secret doors |
+| `enable-trapdoors` | `true` | Enable secret trapdoor functionality |
+| `enable-timers` | `false` | Automatically close doors after a delay |
+| `close-time-seconds` | `5` | Seconds before auto-close (if timers enabled) |
+| `preserve-attachments` | `true` | Save and restore torches, signs, banners, etc. |
+
+### Block Restrictions (Whitelist/Blacklist)
+
+You can control which blocks are allowed to be used as concealing blocks.
+
+**Blacklist mode** (default): All blocks work except those listed in `blacklist`. This is useful for blocking blocks that have their own right-click action (like chests opening their inventory).
+
+**Whitelist mode**: Only blocks listed in `whitelist` can be used. Enable with `enable-whitelist: true`. This is useful if you want to restrict secret doors to specific blocks like bookshelves or stone.
 
 ```yaml
-# Check permissions before allowing door use/creation
-use-permissions: true
-
-# Allow redstone signals to activate secret doors
-enable-redstone: true
-
-# Enable secret trapdoor functionality
-enable-trapdoors: true
-
-# Automatically close doors after a delay
-enable-timers: false
-close-time-seconds: 5
-
-# Save and restore attached blocks (torches, signs, banners, etc.)
-preserve-attachments: true
-
-# Use whitelist mode instead of blacklist mode
+# Default: blacklist mode
 enable-whitelist: false
 
-# Blocks that CANNOT be used as concealing blocks (when enable-whitelist is false)
+# Blocks that CANNOT be concealing blocks (blacklist mode)
 blacklist:
   - CHEST
   - TRAPPED_CHEST
-  - ENDER_CHEST
-  - BARREL
   - FURNACE
-  - BLAST_FURNACE
-  - SMOKER
-  - CRAFTING_TABLE
-  - DISPENSER
-  # ... pressure plates, redstone components, doors
+  # Add any block you want to exclude
 
-# Blocks that CAN be used as concealing blocks (when enable-whitelist is true)
+# Blocks that CAN be concealing blocks (whitelist mode only)
 whitelist:
+  - BOOKSHELF
   - STONE
-  - COBBLESTONE
   - OAK_PLANKS
+  # Add any block you want to allow
 ```
 
-Use `/sd reload` after editing the config to apply changes.
+Block names use [Spigot Material names](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html) (e.g., `OAK_PLANKS`, `STONE_BRICKS`, `BOOKSHELF`).
 
 ## Building from Source
 
