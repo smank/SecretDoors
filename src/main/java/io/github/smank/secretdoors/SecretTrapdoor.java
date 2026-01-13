@@ -1,19 +1,3 @@
-/*
- * SecretTrapdoor.java
- * Last modified: 2014 12 20
- *
- * In place of a legal notice,
- * here is the author's adaptation to the sqlite3 blessing:
- *
- * 	May you do good and not evil.
- * 	May you find forgiveness for yourself and forgive others.
- * 	May you share freely, never taking more than you give.
- *
- * 	May you love the Lord your God with all your heart,
- * 	with all your soul,
- * 	and with all your mind.
- */
-
 package io.github.smank.secretdoors;
 
 import org.bukkit.Effect;
