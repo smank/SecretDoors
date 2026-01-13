@@ -130,6 +130,8 @@ The compiled JAR will be at `build/libs/SecretDoors-x.x.x.jar`
 
 ## Credits
 
+Forked from [shazean/SecretDoors](https://github.com/shazean/SecretDoors).
+
 **Current Maintainer:**
 - [smank](https://github.com/smank) - Minecraft 1.21 update, attachment preservation, bug fixes
 
