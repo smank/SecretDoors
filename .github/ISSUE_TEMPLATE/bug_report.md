@@ -24,9 +24,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Server Information (please complete the following information):**
-- Server version (`/bukkit:version`): 
-- Installed plugins (`/bukkit:plugins`): 
-- WorldGuard Report Pastebin Link (`/wg report -p`): 
+- Server version (`/version`):
+- Java version:
+- SecretDoors version:
 
 **Additional context**
 Add any other context about the problem here.
