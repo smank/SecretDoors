@@ -17,7 +17,7 @@ Secret doors work by hiding a real Minecraft door behind "concealing blocks." Wh
 2. Build solid blocks directly in front of the closed door (both top and bottom)
 3. Right-click the blocks or door to open/close
 
-https://github.com/user-attachments/assets/6ad94e23-9f42-4338-aff8-24f757920284
+https://github.com/user-attachments/assets/f481add3-39f2-4af4-a258-4ab5c0dfcdd1
 
 #### Secret Trapdoor
 
@@ -25,7 +25,7 @@ https://github.com/user-attachments/assets/6ad94e23-9f42-4338-aff8-24f757920284
 2. Place a solid block directly on top
 3. Right-click to open/close
 
-https://github.com/user-attachments/assets/c9c8acae-136f-49fd-a67f-a1ecac8ccff9
+https://github.com/user-attachments/assets/aa0caa38-b7d0-443d-9a59-e5c10e4df32a
 
 ### What Blocks Can Be Used?
 
