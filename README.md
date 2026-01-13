@@ -15,13 +15,7 @@ Secret doors work by hiding a real Minecraft door behind "concealing blocks." Wh
 2. **Build concealing blocks in front** - Place solid blocks directly in front of the closed door (both the top and bottom block positions)
 3. **Activate it** - Right-click either the concealing blocks or the door itself
 
-```
-Side view (door facing east):
-
-[Stone][Door ][ Air ]     ->     [ Air ][Door ][ Air ]
-[Stone][Door ][ Air ]     ->     [ Air ][Door ][ Air ]
-        (closed)                       (open)
-```
+https://github.com/user-attachments/assets/6ad94e23-9f42-4338-aff8-24f757920284
 
 ### Creating a Secret Trapdoor
 
@@ -29,12 +23,7 @@ Side view (door facing east):
 2. **Place a concealing block above it** - One solid block directly on top
 3. **Activate it** - Right-click the concealing block or the trapdoor
 
-```
-Side view:
-
-[Stone]     ->     [ Air ]
-[Trap ]     ->     [Trap ] (open, flipped up)
-```
+https://github.com/user-attachments/assets/c9c8acae-136f-49fd-a67f-a1ecac8ccff9
 
 ### What Blocks Can Be Used?
 
